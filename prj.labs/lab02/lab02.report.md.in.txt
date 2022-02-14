@@ -2,7 +2,7 @@
 автор: Панин Г. И.
 дата: @time_stemp@
 
-<!-- url: https://gitlab.com/2021-misis-spring/polevoy_d_v/-/tree/master/prj.labs/lab02 -->
+url: https://github.com/ssimpletonn/panin-g-i/tree/main/prj.labs/lab01
 
 ### Задание
 1. В качестве тестового использовать изображение data/cross_0256x0256.png

@@ -1,6 +1,0 @@
-C:/Users/griga/opencvlabs/panin-g-i/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/griga/opencvlabs/panin-g-i/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/griga/opencvlabs/panin-g-i/build/prj.labs/lab01/CMakeFiles/lab01.dir
-C:/Users/griga/opencvlabs/panin-g-i/build/prj.labs/lab01/CMakeFiles/ALL_BUILD.dir
-C:/Users/griga/opencvlabs/panin-g-i/build/prj.labs/lab02/CMakeFiles/lab02.dir
-C:/Users/griga/opencvlabs/panin-g-i/build/prj.labs/lab02/CMakeFiles/ALL_BUILD.dir
