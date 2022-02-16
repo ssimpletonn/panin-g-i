@@ -1,8 +1,8 @@
 ## Работа 2. Исследование каналов и JPEG-сжатия
 автор: Панин Г. И.
-дата: 2022-02-14T11:25:32
+дата: 2022-02-16T20:54:00
 
-<!-- url: https://gitlab.com/2021-misis-spring/polevoy_d_v/-/tree/master/prj.labs/lab02 -->
+url: https://github.com/ssimpletonn/panin-g-i/tree/main/prj.labs/lab01
 
 ### Задание
 1. В качестве тестового использовать изображение data/cross_0256x0256.png
@@ -37,10 +37,21 @@
 
 int main() {
     cv::Mat img = cv::imread("../data/cross_0256x0256.png");
+
+    //JPEG качество 25%
     std::vector<int> p = {cv::IMWRITE_JPEG_QUALITY, 25};
-    cv::imwrite("lab02.jpeg", img, p);
-    
-    cv::imshow("img", img);
+    cv::imwrite("cross_0256x0256_025.jpeg", img, p);
+
+    cv::Mat img1 = cv::imread("cross_0256x0256_025.jpeg");
+    cv::imshow("img", img1);
+
+    //Разделение на 3 канала
+    std::vector<cv::Mat> ch(3);
+    cv::split(img, ch);
+
+    cv::imshow("ch1", ch[0]);
+    cv::imshow("ch2", ch[1]);
+    cv::imshow("ch3", ch[2]);
     cv::waitKey(0);
 }
 ```
