@@ -1,7 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include <vector>
 
-cv::Mat mosaic(const cv::Mat& img) {
+cv::Mat mosaic(cv::Mat& img) {
     cv::Mat mosaic(512, 512, CV_8UC3);
     mosaic = 0;
     cv::Rect2d rec = {0, 0, 256, 256};
