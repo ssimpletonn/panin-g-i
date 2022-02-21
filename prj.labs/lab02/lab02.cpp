@@ -25,8 +25,14 @@ cv::Mat mosaic(cv::Mat& img) {
     cv::merge(R, img);
     img.copyTo(mosaic(rec));
 
+    cv::merge(ch, img);
+
     return mosaic;
 }
+
+// cv::Mat getHistogram(cv::Mat& img) {
+
+// }
 
 
 int main() {
@@ -37,11 +43,24 @@ int main() {
     cv::imwrite("cross_0256x0256_025.jpeg", img, p);
     cv::Mat img1 = cv::imread("cross_0256x0256_025.jpeg");
 
+    //Мозаика
     cv::Mat mosaic1 = mosaic(img);
     cv::Mat mosaic2 = mosaic(img1);
 
     cv::imshow("m1", mosaic1);
     cv::imshow("m2", mosaic2);
+
+    cv::imwrite("cross_0256x0256_png_channels.png", mosaic1);
+    cv::imwrite("cross_0256x0256_jpg_channels.png", mosaic2);
+
+    //Гистограммы
+    //cv::Mat histograms;
+    
+    //hist1 = getHistogram(img);
+    //hist2 = getHistogram(img1);
+
+    //cv::vconcat(hist1, hist2, histograms);
+    //cv::imshow("histograms", histograms);
 
     cv::waitKey(0);
 }
