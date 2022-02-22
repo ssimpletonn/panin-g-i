@@ -3,6 +3,7 @@
 
 cv::Mat mosaic(cv::Mat& img) {
     cv::Mat mosaic(512, 512, CV_8UC3);
+    cv::Mat temp;
     mosaic = 0;
     cv::Rect2d rec = {0, 0, 256, 256};
     
@@ -16,23 +17,54 @@ cv::Mat mosaic(cv::Mat& img) {
 
     img.copyTo(mosaic(rec));
     rec.y += 256;
-    cv::merge(G, img);
-    img.copyTo(mosaic(rec));
+    cv::merge(G, temp);
+    temp.copyTo(mosaic(rec));
     rec.x += 256;
-    cv::merge(B, img);
-    img.copyTo(mosaic(rec));
+    cv::merge(B, temp);
+    temp.copyTo(mosaic(rec));
     rec.y -= 256;
-    cv::merge(R, img);
-    img.copyTo(mosaic(rec));
-
-    cv::merge(ch, img);
+    cv::merge(R, temp);
+    temp.copyTo(mosaic(rec));
 
     return mosaic;
 }
 
-// cv::Mat getHistogram(cv::Mat& img) {
+cv::Mat histogram(cv::Mat& img) {
+    std::vector<cv::Mat> ch;
+    cv::split(img, ch);
 
-// }
+    int histSize = 256;
+    float range[] = {0, 256};
+    const float* histRange[] = { range };
+    bool uniform = true, accumulate = false;
+
+    cv::Mat b_hist, g_hist, r_hist;
+    cv::calcHist(&ch[0], 1, 0, cv::Mat(), b_hist, 1, &histSize, histRange, uniform, accumulate);
+    cv::calcHist(&ch[1], 1, 0, cv::Mat(), g_hist, 1, &histSize, histRange, uniform, accumulate);
+    cv::calcHist(&ch[2], 1, 0, cv::Mat(), r_hist, 1, &histSize, histRange, uniform, accumulate);
+    
+    int hist_w = 512, hist_h = 128;
+    int bin_w = cvRound( (double) hist_w/histSize);
+    cv::Mat histImage( hist_h, hist_w, CV_8UC3, cv::Scalar( 255,255,255) );
+    cv::normalize(b_hist, b_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+    cv::normalize(g_hist, g_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+    cv::normalize(r_hist, r_hist, 0, histImage.rows, cv::NORM_MINMAX, -1, cv::Mat());
+
+    for(int i = 1; i < histSize; i++)
+    {
+        cv::line(histImage, cv::Point(bin_w*(i-1), hist_h - cvRound(b_hist.at<float>(i-1))),
+              cv::Point(bin_w*(i), hist_h - cvRound(b_hist.at<float>(i))),
+              cv::Scalar(255, 0, 0), 2, 8, 0);
+        cv::line(histImage, cv::Point( bin_w*(i-1), hist_h - cvRound(g_hist.at<float>(i-1))),
+              cv::Point(bin_w*(i), hist_h - cvRound(g_hist.at<float>(i))),
+              cv::Scalar(0, 255, 0), 2, 8, 0);
+        cv::line(histImage, cv::Point( bin_w*(i-1), hist_h - cvRound(r_hist.at<float>(i-1))),
+              cv::Point( bin_w*(i), hist_h - cvRound(r_hist.at<float>(i))),
+              cv::Scalar( 0, 0, 255), 2, 8, 0);
+    }
+
+    return histImage;
+}
 
 
 int main() {
@@ -43,7 +75,7 @@ int main() {
     cv::imwrite("cross_0256x0256_025.jpeg", img, p);
     cv::Mat img1 = cv::imread("cross_0256x0256_025.jpeg");
 
-    //Мозаика
+    //Мозаика png и jpeg
     cv::Mat mosaic1 = mosaic(img);
     cv::Mat mosaic2 = mosaic(img1);
 
@@ -53,14 +85,17 @@ int main() {
     cv::imwrite("cross_0256x0256_png_channels.png", mosaic1);
     cv::imwrite("cross_0256x0256_jpg_channels.png", mosaic2);
 
-    //Гистограммы
-    //cv::Mat histograms;
     
-    //hist1 = getHistogram(img);
-    //hist2 = getHistogram(img1);
+    //Гистограммы
+    cv::Mat histograms;
+    histograms = 0;
 
-    //cv::vconcat(hist1, hist2, histograms);
-    //cv::imshow("histograms", histograms);
+    cv::Mat hist1 = histogram(img);
+    cv::Mat hist2 = histogram(img1);
+
+    cv::vconcat(hist1, hist2, histograms);
+    cv::imshow("histograms", histograms);
+    cv::imwrite("cross_0256x0256_hists.png", histograms);
 
     cv::waitKey(0);
 }
