@@ -16,7 +16,7 @@ int main() {
 
     //Функция преобразования яркости
     for(int i = 0; i < 256; i++) {
-        lut.at<uchar>(i) = 256 * std::log(i/256. + 1);
+        lut.at<uchar>(i) = cv::saturate_cast<uchar>((1 - std::sin(std::exp(i/256.))) * 256);
     }
 
     //Визуализация функции
