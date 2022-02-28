@@ -49,4 +49,5 @@ int main() {
   cv::waitKey(0);
 
   cv::imwrite("lab01.png", img);
+  return 0;
 }

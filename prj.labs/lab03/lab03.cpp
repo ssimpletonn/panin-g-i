@@ -4,7 +4,8 @@
 int main() {
     cv::Mat img = cv::imread("../data/cross_0256x0256.png");
     cv::Mat imggray = cv::imread("../data/cross_0256x0256.png", cv::IMREAD_GRAYSCALE);
-
+    cv::imshow("img", img);
+    cv::imshow("imggray", imggray);
     cv::imwrite("lab03_rgb.png", img);
     cv::imwrite("lab03_gre.png", imggray);
 
@@ -20,11 +21,18 @@ int main() {
     }
 
     //Визуализация функции
+    cv::line(func, cv::Point(0,0), cv::Point(0,511), 0, 1, 0);
+    cv::line(func, cv::Point(0,511), cv::Point(511,511), 0, 1, 0);
+    cv::line(func, cv::Point(0,3), cv::Point(3,3), 0, 1, 0);
+    cv::putText(func, "(0,255)", cv::Point(10, 10), cv::FONT_HERSHEY_SIMPLEX, 0.25, cv::Scalar(0, 0, 0));
+    cv::putText(func, "(0,0)", cv::Point(10, 500), cv::FONT_HERSHEY_SIMPLEX, 0.25, cv::Scalar(0, 0, 0));
+    cv::putText(func, "(255,0)", cv::Point(480, 500), cv::FONT_HERSHEY_SIMPLEX, 0.25, cv::Scalar(0, 0, 0));
+
     for(int i = 0; i < 512; i++) {
         cv::line(
             func, 
-            cv::Point((i - 1) * 2, 512 - lut.at<uchar>(i - 1) * 4), 
-            cv::Point(i * 2, 512 - lut.at<uchar>(i) * 4),
+            cv::Point((i - 1) * 2, 512 - lut.at<uchar>(i - 1) * 2), 
+            cv::Point(i * 2, 512 - lut.at<uchar>(i) * 2),
             0, 1, 0
         );
     }

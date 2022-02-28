@@ -98,4 +98,5 @@ int main() {
     cv::imwrite("cross_0256x0256_hists.png", histograms);
 
     cv::waitKey(0);
+    return 0;
 }

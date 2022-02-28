@@ -1,0 +1,3 @@
+## Работа 4. Использование бинаризации для анализа изображений (выделение символов) 
+автор: Панин Г.И.
+url:  [https://github.com/ssimpletonn/panin-g-i/tree/main/prj.labs/lab04](https://github.com/ssimpletonn/panin-g-i/tree/main/prj.labs/lab04)
