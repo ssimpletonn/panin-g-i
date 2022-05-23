@@ -25,9 +25,6 @@ int main() {
     cv::Mat img2;
 
     float ker[9]{1, 0, -1, 2, 0, -2, 1, 0, -1};
-    // kernel = {{1, 0}, {0, -1}};
-    // cv::Mat kernel1;
-    // kernel = {{0, 1}, {-1, 0}};
     cv::Mat kernel(3, 3, CV_32FC1, ker);
 
     float ker1[9]{1, 2, 1, 0, 0, 0, -1, -2, -1};
