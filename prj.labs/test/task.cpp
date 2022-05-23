@@ -41,6 +41,11 @@ int main() {
         }
     }
 
+    cv::imwrite("task_I.png", img);
+    cv::imwrite("task_I1.png", img1);
+    cv::imwrite("task_I2.png", img2);
+    cv::imwrite("task_geomean.png", geomean);
+
     cv::imshow("img", img);
     cv::imshow("img1", img1);
     cv::imshow("img2", img2);
